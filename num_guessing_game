@@ -1,0 +1,47 @@
+import random
+
+user_name = input("Welcome to the number guessing game! What is your name? ")
+
+difficulty = input(f"Hello {user_name}, would you like to play on easy or hard mode? ").lower()
+
+if difficulty == "easy":
+    print("You have 8 attempts to guess the number between 1-100.")
+    computer_guess = random.randint(1, 100)
+elif difficulty == "hard":
+    print("You have 8 attempts to guess the number between 101-500.")
+    computer_guess = random.randint(101, 500)
+else:
+    print("Invalid difficulty level. Defaulting to easy mode.")
+    computer_guess = random.randint(1, 100)
+
+attempts = 1
+
+while True:
+    try:
+        user_guess = int(input(f"{user_name}, you have {8 - attempts + 1} tries left. Please enter a number: "))
+
+        attempts += 1
+
+        if attempts > 8:
+            print(f"Sorry {user_name}, you've used all your attempts! The correct number was {computer_guess}.")
+            break
+
+        if computer_guess < 101 and (user_guess < 1 or user_guess > 100):
+            print("Please make sure the number is between 1 and 100.")
+            continue
+
+        elif computer_guess > 100 and (user_guess < 101 or user_guess > 500):
+            print("Please make sure the number is between 101 and 500.")
+            continue
+
+        elif user_guess < computer_guess:
+            print(f"{user_guess} is too low.")
+        elif user_guess > computer_guess:
+            print(f"{user_guess} is too high.")
+        else:
+            print(f"🎉 Congratulations {user_name}! You guessed the number {computer_guess} correctly!")
+            break
+
+    except ValueError:
+        print(f"That is not a valid number {user_name}, please enter a valid number.")
+
